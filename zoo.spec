@@ -1,8 +1,10 @@
 Summary:	File archiving utility with compression
 Summary(pl):	Program do archiwizacji i kompresji
+Summary(ru):	Утилита архивации и компрессии для архивов формата ZOO
+Summary(uk):	Утил╕та архивац╕╖ та компрес╕╖ для арх╕в╕в формату ZOO
 Name:		zoo
 Version:	2.10
-Release:	5
+Release:	6
 License:	Copyrighted, freely distributable if unmodified
 Group:		Applications/Archiving
 #Source0:	ftp://sunsite.unc.edu:/pub/Linux/utils/compress/%{name}-%{PACKAGE_VERSION}.tar.gz
@@ -21,6 +23,16 @@ zoo jest programem archiwizuj╠cym. U©ywa kompresji Lempel-Ziv. Mo©e
 zaoszczЙdziФ od 20 do 80% miejsca, w zale©no╤ci od rodzaju danych.
 Napisany przez Rahula Dhesi, wysЁany na grupЙ comp.sources.misc .
 
+%description -l ru
+Это утилита для архивирования и компрессирования файлов. В основном
+она используется в мире DOS и Amiga, но может быть использована также
+под Linux для извлечения файлов DOS из архивов ZOO.
+
+%description -l uk
+Це утил╕та для арх╕вац╕╖ та компресування файл╕в. Вона в основному
+використову╓ться у св╕т╕ DOS та Amiga, але може бути використана п╕д
+Linux для добування файл╕в з арх╕в╕в ZOO.
+
 %prep
 %setup -q
 %patch -p1
@@ -35,13 +47,11 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 install fiz zoo $RPM_BUILD_ROOT%{_bindir}
 install fiz.1 zoo.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
-gzip -9nf Copyright
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Copyright.gz
+%doc Copyright
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
