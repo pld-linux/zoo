@@ -28,7 +28,7 @@ Napisany przez Rahula Dhesi, wys³any na grupê comp.sources.misc .
 %patch -p1
 
 %build
-%{__make} OPTIM="%{rpmcflags}" linux
+%{__make} CC="%{__cc}" OPTIM="%{rpmcflags}" linux
 
 %install
 rm -rf $RPM_BUILD_ROOT
