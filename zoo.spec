@@ -15,7 +15,7 @@ Source0:	ftp://ftp.slackware.org/pub/slackware/source/a/bin/%{name}-%{version}.t
 # without any changes in behaviour of produced binary)
 Patch0:		ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-2.10.linux.diff.gz
 Patch1:		%{name}-morelinux.patch
-Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 zoo is a file archiving utility for maintaining collections of files.
