@@ -1,3 +1,6 @@
+#
+# TODO: gcc 3.3 patch
+#
 Summary:	File archiving utility with compression
 Summary(pl):	Program do archiwizacji i kompresji
 Summary(ru):	Утилита архивации и компрессии для архивов формата ZOO
@@ -7,7 +10,8 @@ Version:	2.10
 Release:	6
 License:	Copyrighted, freely distributable if unmodified
 Group:		Applications/Archiving
-Source0:	ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-%{PACKAGE_VERSION}.tar.gz
+#Source0:	ftp://sunsite.unc.edu:/pub/Linux/utils/compress/%{name}-%{PACKAGE_VERSION}.tar.gz
+Source0:	ftp://ftp.slackware.org/pub/slackware/source/a/bin/%{name}-%{version}.tar.gz
 # Source0-md5:	f5d3ffdd65cc8a511c83e3c3f108c27e
 Patch0:		ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-2.10.linux.diff.gz
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
