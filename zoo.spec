@@ -22,7 +22,7 @@ zaoszczêdziæ od 20 do 80% miejsca, w zale¿no¶ci od rodzaju danych.
 Napisany przez Rahula Dhesi, wys³any na grupê comp.sources.misc .
 
 %prep
-%setup -q 
+%setup -q
 %patch -p1
 
 %build
