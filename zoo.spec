@@ -27,8 +27,8 @@ Dhesi, and posted to the USENET newsgroup comp.sources.misc.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_bindir}
 install -d $RPM_BUILD_ROOT%{_prefix}/man/man1
-install -s fiz $RPM_BUILD_ROOT%{_bindir}/fiz
-install -s zoo $RPM_BUILD_ROOT%{_bindir}/zoo
+install fiz $RPM_BUILD_ROOT%{_bindir}/fiz
+install zoo $RPM_BUILD_ROOT%{_bindir}/zoo
 install fiz.1 $RPM_BUILD_ROOT%{_prefix}/man/man1/fiz.1
 install zoo.1 $RPM_BUILD_ROOT%{_prefix}/man/man1/zoo.1
 
