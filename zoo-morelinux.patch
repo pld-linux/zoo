@@ -1,0 +1,171 @@
+--- zoo-2.10/ar.h.orig	Thu Jun 12 08:20:10 2003
++++ zoo-2.10/ar.h	Thu Jun 12 08:36:14 2003
+@@ -76,13 +76,13 @@
+ 
+ /* DECODE.C */
+ void decode_start PARMS((void ));
+-int decode PARMS((uint count , uchar buffer []));
++int decode PARMS((my_uint count , uchar buffer []));
+ 
+ /* ENCODE.C */
+ void encode PARMS((FILE *, FILE *));
+ 
+ /* HUF.C */
+-void output PARMS((uint c , uint p ));
++void output PARMS((my_uint c , my_uint p ));
+ void huf_encode_start PARMS((void ));
+ void huf_encode_end PARMS((void ));
+ my_uint decode_c PARMS((void ));
+@@ -93,7 +93,7 @@
+ void make_crctable PARMS((void ));
+ void fillbuf PARMS((int n ));
+ my_uint getbits PARMS((int n ));
+-void putbits PARMS((int n , uint x ));
++void putbits PARMS((int n , my_uint x ));
+ int fread_crc PARMS((uchar *p , int n , FILE *f ));
+ void fwrite_crc PARMS((uchar *p , int n , FILE *f ));
+ void init_getbits PARMS((void ));
+@@ -101,11 +101,11 @@
+ 
+ /* MAKETBL.C */
+ void make_table
+-	PARMS((int nchar, uchar bitlen[], int tablebits, ushort table[]));
++	PARMS((int nchar, uchar bitlen[], int tablebits, my_ushort table[]));
+ 
+ /* MAKETREE.C */
+ int make_tree
+-	PARMS((int nparm, ushort freqparm [], uchar lenparm [], ushort codeparm []));
++	PARMS((int nparm, my_ushort freqparm [], uchar lenparm [], my_ushort codeparm []));
+ 
+ /* delete */
+ 
+--- zoo-2.10/comment.c.orig	Fri Jul  5 16:00:00 1991
++++ zoo-2.10/comment.c	Thu Jun 12 08:37:34 2003
+@@ -104,7 +104,7 @@
+ /* Loop through and add comments for matching files */
+ while (1) {
+    this_dir_offset = zootell (zoo_file);  /* save pos'n of this dir entry */
+-   readdir (&direntry, zoo_file, 1);      /* read directory entry */
++   myreaddir (&direntry, zoo_file, 1);      /* read directory entry */
+    next_ptr = direntry.next;              /* ptr to next dir entry */
+ 
+    /* exit on end of directory chain or end of file */
+--- zoo-2.10/makefile.orig	Thu Jun 12 08:39:37 2003
++++ zoo-2.10/makefile	Thu Jun 12 08:29:16 2003
+@@ -109,7 +109,7 @@
+ 
+ # Linux
+ linux:
+-	$(MAKE) CFLAGS="-c $(OPTIM) -DSYS_V -DANSI_HDRS -DHAVE_MKDIR" $(TARGETS)
++	$(MAKE) CFLAGS="-c $(OPTIM) -DSYS_V -DANSI_HDRS -DHAVE_MKDIR -DANSI_PROTO" $(TARGETS)
+ 
+ # SysV.2, V.3, SCO Xenix
+ sysv:
+--- zoo-2.10/misc.c.orig	Fri Jul  5 16:00:00 1991
++++ zoo-2.10/misc.c	Thu Jun 12 08:37:57 2003
+@@ -212,12 +212,12 @@
+ }
+ 
+ /* 
+-readdir() reads a directory entry from an archive.  If the directory
++myreaddir() reads a directory entry from an archive.  If the directory
+ entry is invalid and if fail is 1, it causes a fatal error;
+ else it returns.  Return value is 0 if no error else -1;
+ */
+ 
+-int readdir (direntry, zoo_file, fail)    /* read directory entry */
++int myreaddir (direntry, zoo_file, fail)    /* read directory entry */
+ register struct direntry *direntry;
+ ZOOFILE zoo_file;
+ int fail;                              /* 0 -> return, 1 -> abort on error */
+--- zoo-2.10/options.h.orig	Fri Jul  5 16:00:00 1991
++++ zoo-2.10/options.h	Thu Jun 12 08:22:58 2003
+@@ -31,7 +31,7 @@
+ #define GETTZ
+ #define FATTR
+ #define T_SIGNAL	void
+-#define VARARGS
++#define STDARG
+ #define NEED_MEMMOVE
+ /* #define NEED_MEMCPY */
+ #define T_UINT16		unsigned short		/* must be 16 bit unsigned */
+--- zoo-2.10/zoo.h.orig	Fri Jul  5 16:00:00 1991
++++ zoo-2.10/zoo.h	Thu Jun 12 08:42:16 2003
+@@ -51,6 +51,9 @@
+ will be able to extract files from future version archives.
+ */
+ 
++#ifndef _ZOO_H
++#define _ZOO_H
++
+ #define H_TYPE	1				/* archive header type */
+ 
+ /* Define major and minor version numbers */
+@@ -240,3 +243,5 @@
+ #define	MAXGEN				0x0f
+ /* version mask to prune down to correct size on large-word machines */
+ #define VER_MASK				0xffff
++
++#endif /* _ZOO_H */
+--- zoo-2.10/zooadd.c.orig	Thu Jun 12 08:20:10 2003
++++ zoo-2.10/zooadd.c	Thu Jun 12 08:38:14 2003
+@@ -583,7 +583,7 @@
+ 					/* prev highest is no longer highest so adjust vflag */
+ 					long save_pos = zootell (zoo_file);			/*DEBUG*/
+ 					zooseek (zoo_file, high_pos, 0);
+-					readdir (&dir2entry, zoo_file, 1);
++					myreaddir (&dir2entry, zoo_file, 1);
+ 					oldcmtpos = dir2entry.comment;
+ 					oldcmtsiz = dir2entry.cmt_size;
+ 					dir2entry.vflag &= (~VFL_LAST);				/* no longer highest */
+@@ -614,7 +614,7 @@
+ 				long save_pos = zootell (zoo_file);			/*DEBUG*/
+ 				++delcount;											/* remember to pack */
+ 				zooseek (zoo_file, prev_pos, 0);
+-				readdir (&dir2entry, zoo_file, 1);
++				myreaddir (&dir2entry, zoo_file, 1);
+ 				if (dir2entry.cmt_size != 0) {		/* propagate latest comment */
+ 					oldcmtpos = dir2entry.comment;
+ 					oldcmtsiz = dir2entry.cmt_size;
+--- zoo-2.10/zooadd2.c.orig	Fri Jul  5 16:00:00 1991
++++ zoo-2.10/zooadd2.c	Thu Jun 12 08:38:24 2003
+@@ -50,7 +50,7 @@
+    do {
+       /* read a directory entry */
+       save_offset = zootell (zoo_file);     /* save pos'n of this dir entry */
+-      readdir (&direntry, zoo_file, 1);   /* read directory entry */
++      myreaddir (&direntry, zoo_file, 1);   /* read directory entry */
+       if (drp->next == 0L) {                 /* END OF CHAIN */
+          zooseek (zoo_file, save_offset, 0);      /* back up */
+          break;                                 /* EXIT on end of chain */
+--- zoo-2.10/zooio.h.orig	Fri Jul  5 16:00:00 1991
++++ zoo-2.10/zooio.h	Thu Jun 12 08:41:38 2003
+@@ -12,6 +12,8 @@
+ #define	OK_STDIO
+ #endif
+ 
++#include "zoo.h"
++
+ #ifndef PARMS
+ #ifdef LINT_ARGS
+ #define	PARMS(x)		x
+@@ -60,7 +62,7 @@
+ int frd_dir PARMS((struct direntry *, ZOOFILE));
+ int fwr_dir PARMS((struct direntry *, ZOOFILE));
+ int fwr_zooh PARMS((struct zoo_header *, ZOOFILE));
+-int readdir PARMS((struct direntry *, ZOOFILE, int));
++int myreaddir PARMS((struct direntry *, ZOOFILE, int));
+ void rwheader PARMS((struct zoo_header *, ZOOFILE, int));
+ void newdir PARMS((struct direntry *));
+ void writedir PARMS((struct direntry *, ZOOFILE));
+--- zoo-2.10/zoolist.c.orig	Fri Jul  5 16:00:00 1991
++++ zoo-2.10/zoolist.c	Thu Jun 12 08:39:18 2003
+@@ -235,7 +235,7 @@
+    }
+ 
+    while (1) {
+-      if (readdir (&direntry, zoo_file, 0) == -1) {
++      if (myreaddir (&direntry, zoo_file, 0) == -1) {
+          prterror ('F', dbl_percent, this_zoo, bad_directory);
+          goto givesummary;
+       }
