@@ -5,8 +5,6 @@ Version:	2.10
 Release:	5
 License:	Copyrighted, freely distributable if unmodified
 Group:		Applications/Archiving
-Group(de):	Applikationen/Archivierung
-Group(pl):	Aplikacje/Archiwizacja
 #Source0:	ftp://sunsite.unc.edu:/pub/Linux/utils/compress/%{name}-%{PACKAGE_VERSION}.tar.gz
 Source0:	ftp://ftp.slackware.org/pub/slackware/source/a/bin/%{name}-%{version}.tar.gz
 Patch0:		ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-2.10.linux.diff.gz
