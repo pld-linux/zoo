@@ -4,14 +4,21 @@ Summary(ru):	Утилита архивации и компрессии для архивов формата ZOO
 Summary(uk):	Утил╕та архивац╕╖ та компрес╕╖ для арх╕в╕в формату ZOO
 Name:		zoo
 Version:	2.10
-Release:	6
+Release:	6.1
 License:	Copyrighted, freely distributable if unmodified
 Group:		Applications/Archiving
-#Source0:	ftp://sunsite.unc.edu:/pub/Linux/utils/compress/%{name}-%{PACKAGE_VERSION}.tar.gz
+# ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-%{version}-3.src.rpm
 Source0:	ftp://ftp.slackware.org/pub/slackware/source/a/bin/%{name}-%{version}.tar.gz
 # Source0-md5:	f5d3ffdd65cc8a511c83e3c3f108c27e
+# I hope these patches don't violete license...
+# (source tarball is still unmodified, patches only make thing build,
+# without any changes in behaviour of produced binary)
 Patch0:		ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-2.10.linux.diff.gz
-Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Patch1:		%{name}-morelinux.patch
+Patch2:		%{name}-CAN-2005-2349.patch
+Patch3:		%{name}-febz-183426.patch
+Patch4:		%{name}-security_pathsize.patch
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 zoo is a file archiving utility for maintaining collections of files.
@@ -36,10 +43,16 @@ Linux для добування файл╕в з арх╕в╕в ZOO.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p0
+%patch3 -p1
+%patch4 -p0
 
 %build
-%{__make} CC="%{__cc}" OPTIM="%{rpmcflags}" linux
+%{__make} linux \
+	CC="%{__cc}" \
+	OPTIM="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
