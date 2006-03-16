@@ -4,7 +4,7 @@ Summary(ru):	Утилита архивации и компрессии для архивов формата ZOO
 Summary(uk):	Утил╕та архивац╕╖ та компрес╕╖ для арх╕в╕в формату ZOO
 Name:		zoo
 Version:	2.10
-Release:	7
+Release:	8
 License:	Copyrighted, freely distributable if unmodified
 Group:		Applications/Archiving
 # ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-%{version}-3.src.rpm
@@ -15,6 +15,9 @@ Source0:	ftp://ftp.slackware.org/pub/slackware/source/a/bin/%{name}-%{version}.t
 # without any changes in behaviour of produced binary)
 Patch0:		ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-2.10.linux.diff.gz
 Patch1:		%{name}-morelinux.patch
+Patch2:		%{name}-CAN-2005-2349.patch
+Patch3:		%{name}-febz-183426.patch
+Patch4:		%{name}-security_pathsize.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -42,9 +45,14 @@ Linux для добування файл╕в з арх╕в╕в ZOO.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p0
+%patch3 -p1
+%patch4 -p0
 
 %build
-%{__make} CC="%{__cc}" OPTIM="%{rpmcflags}" linux
+%{__make} linux \
+	CC="%{__cc}" \
+	OPTIM="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
