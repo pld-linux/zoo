@@ -10,7 +10,7 @@ Group:		Applications/Archiving
 # ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-%{version}-3.src.rpm
 Source0:	ftp://ftp.slackware.org/pub/slackware/source/a/bin/%{name}-%{version}.tar.gz
 # Source0-md5:	f5d3ffdd65cc8a511c83e3c3f108c27e
-# I hope these patches don't violete license...
+# I hope these patches don't violate license...
 # (source tarball is still unmodified, patches only make thing build,
 # without any changes in behaviour of produced binary)
 Patch0:		ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-2.10.linux.diff.gz
