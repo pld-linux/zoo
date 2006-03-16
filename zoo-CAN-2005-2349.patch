@@ -2,11 +2,18 @@ Taken from Fedora
 
 --- portable.c
 +++ portable.c
-@@ -364,6 +364,31 @@
+@@ -344,6 +344,7 @@
+ ZOOFILE zoo_file;
+ {
+    int status;
++   char *p;
+    BYTE bytes[MAXDIRSIZE];    /* big enough to hold variable part too */
+ 
+    /* To simplify things, we read the maximum possible size of the
+@@ -364,6 +365,30 @@
        show_dir(direntry);
     }
  #endif
-+   char *p;
 +   /* take off '../'   */
 +   while ((p = strstr( direntry->dirname, "../" )) != NULL) {
 +      while (*(p+3) != '\0') {
