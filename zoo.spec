@@ -1,7 +1,7 @@
 Summary:	File archiving utility with compression
-Summary(pl.UTF-8):   Program do archiwizacji i kompresji
-Summary(ru.UTF-8):   Утилита архивации и компрессии для архивов формата ZOO
-Summary(uk.UTF-8):   Утиліта архивації та компресії для архівів формату ZOO
+Summary(pl.UTF-8):	Program do archiwizacji i kompresji
+Summary(ru.UTF-8):	Утилита архивации и компрессии для архивов формата ZOO
+Summary(uk.UTF-8):	Утиліта архивації та компресії для архівів формату ZOO
 Name:		zoo
 Version:	2.10
 Release:	8
