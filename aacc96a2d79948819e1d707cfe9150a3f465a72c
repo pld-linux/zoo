@@ -1,0 +1,2 @@
+- add CAN-2005-2349, febz-183426, security_pathsize patches from gentoo, rel 8
+[security_pathsize fixes CVE-2006-0855]
