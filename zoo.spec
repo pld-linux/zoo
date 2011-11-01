@@ -14,6 +14,7 @@ Source0:	ftp://ftp.slackware.org/pub/slackware/source/a/bin/%{name}-%{version}.t
 # (source tarball is still unmodified, patches only make thing build,
 # without any changes in behaviour of produced binary)
 Patch0:		ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-2.10.linux.diff.gz
+# Patch0-md5:	56e64ab6eace1dd4a7bcc402fff02dee
 Patch1:		%{name}-morelinux.patch
 Patch2:		%{name}-CAN-2005-2349.patch
 Patch3:		%{name}-febz-183426.patch
