@@ -19,6 +19,8 @@ Patch1:		%{name}-morelinux.patch
 Patch2:		%{name}-CAN-2005-2349.patch
 Patch3:		%{name}-febz-183426.patch
 Patch4:		%{name}-security_pathsize.patch
+Patch5:		types.patch
+Patch6:		format-security.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -49,6 +51,8 @@ Linux для добування файлів з архівів ZOO.
 %patch2 -p0
 %patch3 -p1
 %patch4 -p0
+%patch5 -p1
+%patch6 -p1
 
 %build
 %{__make} linux \

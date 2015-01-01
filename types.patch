@@ -1,0 +1,72 @@
+--- zoo-2.10/sysv.c.orig	2015-01-01 11:29:55.000000000 +0000
++++ zoo-2.10/sysv.c	2015-01-01 11:32:08.355029029 +0000
+@@ -64,7 +64,7 @@
+ }
+ 
+ extern long timezone;   /* defined by library routine */
+-long time ();
++//long time ();
+ struct tm *localtime ();
+ 
+ /* Function gettz(), returns the offset from GMT in seconds of the
+@@ -77,10 +77,10 @@
+ #define INV_VALUE		(SEC_IN_DAY + 1L)
+ 	static long retval = INV_VALUE;	     /* cache, init to impossible value */
+ 	struct tm *tm;
+-	long clock;
++	time_t clock;
+ 	if (retval != INV_VALUE)				 /* if have cached value, return it */
+ 		return retval;
+-	clock = time ((long *) 0);
++	clock = time ((time_t *) 0);
+ 	tm = localtime (&clock);
+ 	retval = timezone - tm->tm_isdst*3600;
+ 	return retval;
+--- zoo-2.10/zooext.c.orig	2015-01-01 11:32:41.435027863 +0000
++++ zoo-2.10/zooext.c	2015-01-01 11:35:45.998354685 +0000
+@@ -62,7 +62,7 @@
+ char *whichname;                          /* which name to extract */
+ char matchname[PATHSIZE];                 /* for pattern matching only */
+ #ifndef NOSIGNAL
+-T_SIGNAL (*oldsignal)();        /* to save previous SIGINT handler */
++T_SIGNAL (*oldsignal)(int);        /* to save previous SIGINT handler */
+ #endif
+ ZOOFILE zoo_file;                         /* open archive */
+ long next_ptr;                            /* pointer to within archive */
+@@ -626,7 +626,7 @@
+ 
+ /* Ctrl_c() is called if ^C is hit while a file is being extracted.
+    It closes the files, deletes it, and exits. */
+-T_SIGNAL ctrl_c()
++T_SIGNAL ctrl_c(int __sig)
+ {
+ #ifndef NOSIGNAL
+    signal (SIGINT, SIG_IGN);     /* ignore any more */
+--- zoo-2.10/zoofns.h.orig	2015-01-01 11:36:21.808353422 +0000
++++ zoo-2.10/zoofns.h	2015-01-01 11:36:32.718353036 +0000
+@@ -42,12 +42,12 @@
+ int cfactor PARMS ((long, long));
+ int chname PARMS ((char *, char *));
+ int cmpnum PARMS ((unsigned int, unsigned int, unsigned int, unsigned int));
+-T_SIGNAL ctrl_c PARMS ((void));
++T_SIGNAL ctrl_c PARMS ((int));
+ int exists PARMS ((char *));
+ int getfile PARMS ((ZOOFILE, ZOOFILE, long, int));
+ int getutime PARMS ((char *, unsigned *, unsigned *));
+ int gettime PARMS ((ZOOFILE, unsigned *, unsigned *));
+-T_SIGNAL handle_break PARMS ((void));
++T_SIGNAL handle_break PARMS ((int));
+ 
+ #ifdef USE_ASCII
+ int isupper PARMS ((int));
+--- zoo-2.10/zoopack.c.orig	2015-01-01 11:37:13.198351608 +0000
++++ zoo-2.10/zoopack.c	2015-01-01 11:37:24.641684538 +0000
+@@ -388,7 +388,7 @@
+ 
+ /* handle_break() */
+ /* Sets break_hit to 1 when called */
+-T_SIGNAL handle_break()
++T_SIGNAL handle_break(int signum)
+ {
+ #ifndef NOSIGNAL
+    signal (SIGINT, SIG_IGN);     /* ignore future control ^Cs for now */

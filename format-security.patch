@@ -1,0 +1,101 @@
+--- zoo-2.10/zoo.c.orig	2015-01-01 11:39:28.198346847 +0000
++++ zoo-2.10/zoo.c	2015-01-01 11:41:05.491676748 +0000
+@@ -166,7 +166,7 @@
+                   cmd == UPDATE || cmd == DELETE) && argc < 4) ||
+             ((cmd == EXTRACT || cmd == TEST || cmd == LIST ||
+                      cmd == PRINT || cmd == COMMENT) && argc < 3)) {
+-         fprintf (stderr, incorrect_args);
++         fputs (incorrect_args, stderr);
+          goto show_usage;
+       }
+    } else {
+@@ -190,7 +190,7 @@
+ 					)
+ 				 )
+ 			) {
+-         fprintf (stderr, incorrect_args);
++         fputs (incorrect_args, stderr);
+          goto show_usage;
+       }
+    }
+@@ -281,7 +281,7 @@
+ 
+ /* brief usage list */
+ give_list:
+-	fprintf (stderr, usage); zooexit (1);
++	fputs (usage, stderr); zooexit (1);
+ 
+ /* help screen */
+ bigusage:
+@@ -289,18 +289,18 @@
+ printf ("Zoo archiver, %s\n", version);
+ printf("(C) Copyright 1991 Rahul Dhesi -- Noncommercial use permitted\n");
+ 
+-printf (usage);
++printf ("%s", usage);
+ printf ("\nChoose a command from within {} and zero or more modifiers from within [].\n");
+ 
+ printf ("E.g.:  `zoo a save /bin/*' will archive all files in /bin into save.zoo.\n");
+ printf ("(Please see the user manual for a complete description of commands.)\n\n");
+-printf (nov_usage);
+-printf (nov_cmds);
++printf ("%s", nov_usage);
++printf ("%s", nov_cmds);
+ printf ("\n\n\n\n");
+ wait_return();	/* print msg & wait for RETURN */
+ 
+ printf ("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+-printf (usage);
++printf ("%s", usage);
+ 
+ printf (" Commands in {} mean:         |Modifiers in [] mean:\n");
+ 
+--- zoo-2.10/zooadd.c~	2015-01-01 11:39:00.000000000 +0000
++++ zoo-2.10/zooadd.c	2015-01-01 11:41:45.565008667 +0000
+@@ -539,7 +539,7 @@
+          status = getfile (this_file, zoo_file, -1L, 1);
+          if (status != 0) {  /* if III */
+             success = 0;
+-            printf (disk_full);
++            puts (disk_full);
+             exit_status++;
+          } else {
+             success = 1;
+--- zoo-2.10/zoolist.c.orig	2015-01-01 11:42:14.038340996 +0000
++++ zoo-2.10/zoolist.c	2015-01-01 11:43:02.441672622 +0000
+@@ -368,7 +368,7 @@
+          } else {
+             if (talking && first_time && !show_name) {/*print archive header */
+                printf ("Length    CF  Size Now  Date      Time\n");
+-               printf (tot_line);
++               printf ("%s", tot_line);
+             }
+             printf ("%8lu %3u%% %8lu  %2d %-.3s %02d %02d:%02d:%02d",  
+                      direntry.org_size, 
+@@ -466,7 +466,7 @@
+    if (talking && !show_name) {
+       if (!fast && file_count) {
+          tot_sf = cfactor (tot_org_siz, tot_siz_now);
+-         printf (tot_line);
++         printf ("%s", tot_line);
+       
+          printf (tot_fmt, tot_org_siz, tot_sf, tot_siz_now, file_count);
+ 			if (file_count > 1)
+@@ -476,7 +476,7 @@
+          
+          if (del_count || expl_ver || expl_deleted || expl_comment ||
+ 					expl_star || (show_gen && (zoo_header.type > 0)))
+-            printf (dashes);
++            printf ("%s", dashes);
+       }
+    
+       if (!fast) {
+@@ -518,7 +518,7 @@
+ if (talking && show_name) {
+    if (file_count) {
+       tot_sf = cfactor (tot_org_siz, tot_siz_now);
+-      printf (tot_line);
++      printf ("%s", tot_line);
+       printf (tot_fmt, tot_org_siz, tot_sf, tot_siz_now, file_count);
+ 		if (file_count > 1)
+ 			printf ("s\n");
