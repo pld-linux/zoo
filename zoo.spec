@@ -4,7 +4,7 @@ Summary(ru.UTF-8):	Утилита архивации и компрессии д�
 Summary(uk.UTF-8):	Утиліта архивації та компресії для архівів формату ZOO
 Name:		zoo
 Version:	2.10
-Release:	9
+Release:	10
 License:	Copyrighted, freely distributable if unmodified
 Group:		Applications/Archiving
 # ftp://sunsite.unc.edu/pub/Linux/utils/compress/%{name}-%{version}-3.src.rpm
